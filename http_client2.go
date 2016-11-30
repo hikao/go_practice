@@ -1,16 +1,16 @@
 package main
 
 import (
-    "fmt"
+  "fmt"
 	"io"
-    "net/http"
+  "net/http"
 )
 
 func main() {
-	res, err := http.Get("https://golang.org")
+  res, err := http.Get("https://golang.org")
 	if err != nil {
-		fmt.Println("Request error:", err)
-		return
+		  fmt.Println("Request error:", err)
+		  return
 	}
 	defer res.Body.Close()
 
