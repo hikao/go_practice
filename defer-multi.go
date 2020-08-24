@@ -1,13 +1,10 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
-	sum := 0
 	for i := 0; i < 10; i++ {
-		sum += 1
+		defer fmt.Println(i)
 	}
-	fmt.Println(sum)
+	defer fmt.Println("10")
 }
