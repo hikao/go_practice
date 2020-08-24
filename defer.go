@@ -3,8 +3,14 @@ package main
 import "fmt"
 
 func main() {
-	defer fmt.Println("a")
-	defer fmt.Println("world")
+	fmt.Println("start")
 
-	fmt.Println("hello")
+	defer delay()
+
+	fmt.Println("end")
+
+}
+
+func delay() {
+	fmt.Println("called delay func")
 }
