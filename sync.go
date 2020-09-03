@@ -1,39 +1,28 @@
 package main
 
 import (
-  "log"
-  "time"
-  "sync"
+	"fmt"
+	"math/rand"
+	"time"
 )
 
+const goroutine = 3
+
 func main() {
-  log.Print("started")
+	c := make(chan int)
 
-  funcs := []func(){
-    func() {
-      log.Print("hoge")
-      time.Sleep(3 * time.Second)
-    },
-    func(){
-      log.Print("fuga")
-      time.Sleep(3 * time.Second)
-    },
-    func(){
-      log.Print("moge")
-      time.Sleep(3 * time.Second)
-    },
-  }
+	for i := 0; i < goroutine; i++ {
+		go func(s chan<- int) {
+			time.Sleep(
+				time.Duration(rand.Int63n(10)) * time.Second)
+			fmt.Println("completed")
+			s <- 0
+		}(c)
+	}
 
-  var waitGroup sync.WaitGroup
-  for _, sleep := range funcs {
-    waitGroup.Add(1)
-      go func(function func()){
-        defer waitGroup.Done()
-        function()
-      }(sleep)
-  }
+	for i := 0; i < goroutine; i++ {
+		<-c
+	}
 
-  waitGroup.Wait()
-  log.Print("Finish")
+	fmt.Println("all completed")
 }
-
